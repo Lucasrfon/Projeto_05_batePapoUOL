@@ -3,7 +3,7 @@ let nickName;
 let mensagem;
 let requisicaoMsg;
 let usuario = {
-    name: "samuraiz"
+    name: "samuraiZ"
 }
 let requisicaoLogin = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', usuario);
 let msg = {
@@ -36,7 +36,7 @@ function enviarMensagem(elemento) {
     mensagem = elemento.parentNode.querySelector("input").value;
     requisicaoMsg = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', msg);
     elemento.parentNode.querySelector("input").value = "";
-    atualizar()
+    requisicaoMsg.then(atualizar);
 }
 function renderizarMensagens(resposta) {
     renderizar.innerHTML = ""
@@ -61,14 +61,16 @@ function renderizarMensagens(resposta) {
                 </div>`;
                 break;
             case "private_message":
-                renderizar.innerHTML +=
-                `<div class="reservadamente">
-                    <span class="hora">${resposta.data[i].time}</span>
-                    <h1>${resposta.data[i].from}</h1>
-                    <span>reservadamente para</span>
-                    <h1>${resposta.data[i].to}:</h1>
-                    <span>${resposta.data[i].text}</span>
-                </div>`;
+                if(resposta.data[i].from === usuario.name || resposta.data[i].to === usuario.name || resposta.data[i].from === "Todos") {
+                    renderizar.innerHTML +=
+                    `<div class="reservadamente">
+                        <span class="hora">${resposta.data[i].time}</span>
+                        <h1>${resposta.data[i].from}</h1>
+                        <span>reservadamente para</span>
+                        <h1>${resposta.data[i].to}:</h1>
+                        <span>${resposta.data[i].text}</span>
+                    </div>`;
+                }
                 break;
             default:
                 "Error";
