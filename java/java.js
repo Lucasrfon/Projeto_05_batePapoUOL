@@ -3,7 +3,7 @@ let nickName;
 let mensagem;
 let requisicaoMsg;
 let usuario = {
-    name: "samuraix"
+    name: "samuraiz"
 }
 let requisicaoLogin = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', usuario);
 let msg = {
@@ -74,7 +74,7 @@ function renderizarMensagens(resposta) {
                 "Error";
         }
     }
-    renderizar.scrollIntoView(false)
+    document.querySelector(".container").lastChild.scrollIntoView()
 }
 function atualizar() {
     let mensagens = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
