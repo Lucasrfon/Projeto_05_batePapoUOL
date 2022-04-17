@@ -10,47 +10,16 @@
 </head>
 <body>
     <div class="topo">
-        <img src="/imagens/logo 1.png" alt=""/>
+        <img src="/imagens/logo 1.png" alt="Logo UOL"/>
         <ion-icon name="people"></ion-icon>
     </div>
     <div class="container">
-        <div class="entradaSaida">
-            <span class="hora">(09:21:45)</span>
-            <h1>João</h1>
-            <span>entra na sala...</span>
-        </div>
-        <div class="geral">
-            <span class="hora">(09:21:45)</span>
-            <h1>João</h1>
-            <span>para</span>
-            <h1>Todos:</h1>
-            <span>Bom dia</span>
-        </div>
-        <div class="geral">
-            <span class="hora">(09:21:45)</span>
-            <h1>João</h1>
-            <span>para</span>
-            <h1>Maria:</h1>
-            <span>Oi gatinha!!</span>
-        </div>
-        <div class="reservadamente">
-            <span class="hora">(09:21:45)</span>
-            <h1>João</h1>
-            <span>reservadamente para</span>
-            <h1>Maria:</h1>
-            <span>quer tc?</span>
-        </div>
-        <div class="entradaSaida">
-            <span class="hora">(09:21:45)</span>
-            <h1>João</h1>
-            <span>sai da sala...</span>
-        </div>
     </div>
     <div class="base">
-        <input type="text">
-        <div>Escreva aqui...</div>
-        <ion-icon name="paper-plane-outline"></ion-icon>
+        <input type="text" placeholder="Escreva aqui...">
+        <ion-icon name="paper-plane-outline" onclick="enviarMensagem(this)"></ion-icon>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
     <script src="/java/java.js"></script>
 </body>
