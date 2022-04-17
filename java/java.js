@@ -2,40 +2,44 @@
 let nickName;
 let mensagem;
 let requisicaoMsg;
-const mensagens = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
-const renderizar = document.querySelector(".container");
-
-//Declaração de objetos
-const usuario = {
-    name: "samuraiX"
+let usuario = {
+    name: "samuraix"
 }
-const msg = {
-    from: "samuraiX",
+let requisicaoLogin = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', usuario);
+let msg = {
+    from: "SamuraiX",
 	to: "Todos",
 	text: "mensagem digitada",
 	type: "message"
 }
+let renderizar = document.querySelector(".container");
 
 //Declaração de Funções
-function usuarioInvalido(erro) {
-    console.log(erro.response.status);
+function definirNickname() {
+    nickName = prompt("Escolha seu nickname:");
+}
+function usuarioInvalido() {
+    alert("Infelizmente já existe um usuário com esse nickname! Por gentileza, escolha outro.")
+    definirNickname();
 }
 function entrarBatePapo() {
+    let mensagens = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
     mensagens.then(renderizarMensagens);
-    setInterval(manterConectado, 3000);
+    setInterval(manterConectado, 4000);
+    setInterval(atualizar, 3000)
 }
 function manterConectado() {
     axios.post('https://mock-api.driven.com.br/api/v6/uol/status', usuario);
-    renderizarMensagens();
     console.log("oi")
 }
 function enviarMensagem(elemento) {
     mensagem = elemento.parentNode.querySelector("input").value;
     requisicaoMsg = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', msg);
     elemento.parentNode.querySelector("input").value = "";
-    renderizarMensagens();
+    atualizar()
 }
 function renderizarMensagens(resposta) {
+    renderizar.innerHTML = ""
     for(let i = 0; i < resposta.data.length; i ++) {
         switch(resposta.data[i].type) {
             case "status":
@@ -70,13 +74,14 @@ function renderizarMensagens(resposta) {
                 "Error";
         }
     }
+    renderizar.scrollIntoView(false)
+}
+function atualizar() {
+    let mensagens = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
+    mensagens.then(renderizarMensagens);
 }
 
-//Axios
-const requisicaoLogin = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', usuario);
-
 //Lógica
+definirNickname();
+requisicaoLogin.then(entrarBatePapo);
 requisicaoLogin.catch(usuarioInvalido)
-requisicaoLogin.then(entrarBatePapo)
-
-
