@@ -122,7 +122,6 @@ function abrirParticipantes() {
 }
 function selecionar(esse) {
     document.querySelector(".ligado").classList.remove("ligado")
-    console.log(esse)
     esse.parentNode.querySelector(".check").classList.add("ligado")
     para = esse.querySelector("span").innerHTML
     if(tipo === "message") {
@@ -150,5 +149,21 @@ function entrando() {
     document.querySelector(".login").innerHTML +=
     `<div class="fa fa-spinner fa-spin" style="font-size:80px"></div>
     <div class="espera">Entrando...</div>`
-    setTimeout(entrarBatePapo, 3000)
+    setTimeout(entrarBatePapo, 1000)
 }
+
+//Teclando enter
+let inputLogin = document.querySelector(".login").querySelector("input");
+inputLogin.addEventListener("keyup", function(event) {
+    if(event.key === "Enter") {
+        event.preventDefault();
+        document.querySelector("button").click();
+    }
+})
+let inputMsg = document.querySelector(".base").querySelector("input");
+inputMsg.addEventListener("keyup", function(event) {
+    if(event.key === "Enter") {
+        event.preventDefault();
+        document.querySelector(".base").querySelector("ion-icon").click();
+    }
+})
