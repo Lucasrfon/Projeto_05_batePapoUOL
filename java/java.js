@@ -13,11 +13,22 @@ let para = "Todos";
 function definirNickname() {
     usuario.name = document.querySelector(".login").querySelector("input").value;
     requisicaoLogin = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', usuario);
-    requisicaoLogin.then(entrando);
+    entrando();
+    requisicaoLogin.then(entrarBatePapo);
     requisicaoLogin.catch(usuarioInvalido);
 }
 function usuarioInvalido() {
-    alert("Infelizmente já existe um usuário com esse nickname! Por gentileza, escolha outro.")
+    alert("Infelizmente já existe um usuário com esse nickname! Por gentileza, escolha outro.");
+    document.querySelector(".login").innerHTML =
+    `<img src="/imagens/logo 1.png" alt="Logo UOL" />
+    <input type="text" placeholder="Digite seu nome">
+    <button onclick="definirNickname()">Entrar</button>`
+    document.querySelector(".login").querySelector("input").addEventListener("keyup", function(event) {
+        if(event.key === "Enter") {
+            event.preventDefault();
+            document.querySelector("button").click();
+        }
+    })
 }
 function atualizar() {
     let mensagens = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
@@ -97,7 +108,7 @@ function renderizarMensagens(resposta) {
 function renderizarParticipantes(resp) {
     listaParticipantes.innerHTML =
     `<div>
-        <div onclick="selecionar(this)">
+        <div class="part" onclick="selecionar(this)">
             <ion-icon class="todos" name="people"></ion-icon>
             <span>Todos</span>
         </div>
@@ -106,7 +117,7 @@ function renderizarParticipantes(resp) {
     for(let i = 0; i < resp.data.length; i ++) {
         listaParticipantes.innerHTML += 
         `<div>
-            <div onclick="selecionar(this)">
+            <div class="part" onclick="selecionar(this)">
                 <ion-icon class="pessoa" name="person"></ion-icon>
                 <span>${resp.data[i].name}</span>
             </div>
@@ -144,17 +155,14 @@ function selecionarVisibilidade(este) {
     }
 }
 function entrando() {
-    document.querySelector(".login").querySelector("input").remove();
-    document.querySelector("button").remove();
-    document.querySelector(".login").innerHTML +=
-    `<div class="fa fa-spinner fa-spin" style="font-size:80px"></div>
+    document.querySelector(".login").innerHTML =
+    `<img src="/imagens/logo 1.png" alt="Logo UOL" />
+    <div class="fa fa-spinner fa-spin" style="font-size:80px"></div>
     <div class="espera">Entrando...</div>`
-    setTimeout(entrarBatePapo, 1000)
 }
 
 //Teclando enter
-let inputLogin = document.querySelector(".login").querySelector("input");
-inputLogin.addEventListener("keyup", function(event) {
+document.querySelector(".login").querySelector("input").addEventListener("keyup", function(event) {
     if(event.key === "Enter") {
         event.preventDefault();
         document.querySelector("button").click();

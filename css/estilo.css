@@ -119,6 +119,9 @@ input {
 .menuParticipantes span {
     margin-left: 10px;
 }
+.part {
+    word-wrap: break-word;
+}
 .todos {
     font-size: 20px;
 }
