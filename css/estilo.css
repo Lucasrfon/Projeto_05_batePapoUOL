@@ -43,6 +43,10 @@ h1 {
     margin: 5px 0px;
     flex-wrap: wrap;
 }
+.container span {
+    max-width: 100%;
+    word-wrap: break-word;
+}
 .entradaSaida {
     background-color: #dcdcdc;
     height: 40px;
@@ -78,5 +82,5 @@ input {
     border: none;
     outline: none;
     width: 80%;
-    font-size: 20px;
+    font-size: 16px;
 }

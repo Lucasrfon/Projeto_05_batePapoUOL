@@ -2,23 +2,20 @@
 let nickName;
 let mensagem;
 let requisicaoMsg;
-let usuario = {
-    name: "samuraiZ"
-}
-let requisicaoLogin = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', usuario);
-let msg = {
-    from: "SamuraiX",
-	to: "Todos",
-	text: "mensagem digitada",
-	type: "message"
-}
+let usuario = {}
+let requisicaoLogin;
+let msg = {}
 let renderizar = document.querySelector(".container");
 
 //Declaração de Funções
 function definirNickname() {
-    nickName = prompt("Escolha seu nickname:");
+    usuario.name = prompt("Escolha seu nickname:");
+    requisicaoLogin = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', usuario);
+    requisicaoLogin.then(entrarBatePapo);
+    requisicaoLogin.catch(usuarioInvalido);
 }
 function usuarioInvalido() {
+    console.log(requisicaoLogin)
     alert("Infelizmente já existe um usuário com esse nickname! Por gentileza, escolha outro.")
     definirNickname();
 }
@@ -34,9 +31,17 @@ function manterConectado() {
 }
 function enviarMensagem(elemento) {
     mensagem = elemento.parentNode.querySelector("input").value;
+    msg = {
+        from: usuario.name,
+        to: "Todos",
+        text: mensagem,
+        type: "message",
+    }
+    console.log(msg)
     requisicaoMsg = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', msg);
     elemento.parentNode.querySelector("input").value = "";
     requisicaoMsg.then(atualizar);
+    requisicaoMsg.catch(erro)
 }
 function renderizarMensagens(resposta) {
     renderizar.innerHTML = ""
@@ -82,8 +87,9 @@ function atualizar() {
     let mensagens = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
     mensagens.then(renderizarMensagens);
 }
+function erro() {
+    window.location.reload()
+}
 
 //Lógica
 definirNickname();
-requisicaoLogin.then(entrarBatePapo);
-requisicaoLogin.catch(usuarioInvalido)
