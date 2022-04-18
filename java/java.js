@@ -40,6 +40,9 @@ function manterConectado() {
 }
 function enviarMensagem(elemento) {
     let mensagem = elemento.parentNode.querySelector("input").value;
+    if(mensagem == "") {
+        return;
+    }
     msg = {
         from: usuario.name,
         to: para,
@@ -49,7 +52,7 @@ function enviarMensagem(elemento) {
     requisicaoMsg = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', msg);
     elemento.parentNode.querySelector("input").value = "";
     requisicaoMsg.then(atualizar);
-    requisicaoMsg.catch(erro)
+    requisicaoMsg.catch(erro);
 }
 function renderizarMensagens(resposta) {
     renderizar.innerHTML = ""

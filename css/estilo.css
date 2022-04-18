@@ -171,6 +171,10 @@ input {
 .menuParticipantes div:hover {
     cursor: pointer;
 }
+.menuParticipantes {
+    max-height: 300px;
+    overflow-y: scroll;
+}
 .visibilidade div:hover {
     cursor: pointer;
 }
@@ -209,6 +213,9 @@ input {
     border: none;
     margin-top: 20px;
     border-radius: 10px;
+}
+.login button:hover {
+    cursor: pointer;
 }
 .login input::placeholder {
     color: #aeaeae;
