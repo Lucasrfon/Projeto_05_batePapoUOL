@@ -1,11 +1,13 @@
 //Declaração de variáveis
 let nickName;
-let mensagem;
 let requisicaoMsg;
 let usuario = {}
 let requisicaoLogin;
 let msg = {}
 let renderizar = document.querySelector(".container");
+let listaParticipantes = document.querySelector(".menuParticipantes");
+let tipo = "message";
+let para = "Todos";
 
 //Declaração de Funções
 function definirNickname() {
@@ -15,29 +17,35 @@ function definirNickname() {
     requisicaoLogin.catch(usuarioInvalido);
 }
 function usuarioInvalido() {
-    console.log(requisicaoLogin)
     alert("Infelizmente já existe um usuário com esse nickname! Por gentileza, escolha outro.")
     definirNickname();
 }
-function entrarBatePapo() {
+function atualizar() {
     let mensagens = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
     mensagens.then(renderizarMensagens);
+}
+function atualizarParticipantes() {
+    let lista = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants');
+    lista.then(renderizarParticipantes);
+}
+function entrarBatePapo() {
+    atualizar();
+    atualizarParticipantes();
     setInterval(manterConectado, 4000);
-    setInterval(atualizar, 3000)
+    setInterval(atualizar, 3000);
+    setInterval(atualizarParticipantes, 10000);
 }
 function manterConectado() {
     axios.post('https://mock-api.driven.com.br/api/v6/uol/status', usuario);
-    console.log("oi")
 }
 function enviarMensagem(elemento) {
-    mensagem = elemento.parentNode.querySelector("input").value;
+    let mensagem = elemento.parentNode.querySelector("input").value;
     msg = {
         from: usuario.name,
-        to: "Todos",
+        to: para,
         text: mensagem,
-        type: "message",
+        type: tipo,
     }
-    console.log(msg)
     requisicaoMsg = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', msg);
     elemento.parentNode.querySelector("input").value = "";
     requisicaoMsg.then(atualizar);
@@ -83,16 +91,55 @@ function renderizarMensagens(resposta) {
     }
     document.querySelector(".container").lastChild.scrollIntoView()
 }
-function atualizar() {
-    let mensagens = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
-    mensagens.then(renderizarMensagens);
+function renderizarParticipantes(resp) {
+    listaParticipantes.innerHTML =
+    `<div>
+        <div onclick="selecionar(this)">
+            <ion-icon class="todos" name="people"></ion-icon>
+            <span>Todos</span>
+        </div>
+        <ion-icon class="check ligado" name="checkmark"></ion-icon>
+    </div>`;
+    for(let i = 0; i < resp.data.length; i ++) {
+        listaParticipantes.innerHTML += 
+        `<div>
+            <div onclick="selecionar(this)">
+                <ion-icon class="pessoa" name="person"></ion-icon>
+                <span>${resp.data[i].name}</span>
+            </div>
+            <ion-icon class="check" name="checkmark"></ion-icon>
+        </div>`
+    }
 }
 function erro() {
     window.location.reload()
 }
 function abrirParticipantes() {
-    document.querySelector(".containerParticipantes").classList.remove("desligado")
+    document.querySelector(".containerParticipantes").classList.toggle("desligado")
+}
+function selecionar(esse) {
+    document.querySelector(".ligado").classList.remove("ligado")
+    console.log(esse)
+    esse.parentNode.querySelector(".check").classList.add("ligado")
+    para = esse.querySelector("span").innerHTML
+    if(tipo === "message") {
+        document.querySelector(".lembrete").innerHTML = `Enviando para ${para}`
+    }
+    if(tipo === "private_message") {
+        document.querySelector(".lembrete").innerHTML = `Enviando para ${para} (reservadamente)`
+    }
+}
+function selecionarVisibilidade(este) {
+    document.querySelector(".visibilidade").querySelector(".ligado").classList.remove("ligado");
+    este.parentNode.querySelector(".check").classList.add("ligado")
+    if(este.querySelector("span").innerHTML === "Público") {
+        tipo = "message"
+        document.querySelector(".lembrete").innerHTML = `Enviando para ${para}`
+    }
+    if(este.querySelector("span").innerHTML === "Reservadamente") {
+        tipo = "private_message"
+        document.querySelector(".lembrete").innerHTML = `Enviando para ${para} (reservadamente)`
+    }
 }
 
-//Lógica
 definirNickname();

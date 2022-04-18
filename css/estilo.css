@@ -32,7 +32,7 @@ h2 {
     font-size: 50px;
 }
 .container {
-    margin: 110px 0px 70px 0px;
+    margin: 110px 0px 90px 0px;
 }
 .container div {
     width: 100%;
@@ -77,14 +77,15 @@ h2 {
     font-size: 20px;
 }
 .base div {
-    position: absolute;
-    top: 30%;
-    left: 10;
+    width: 90%;
+}
+.base ion-icon {
+   font-size: 30px; 
 }
 input {
     border: none;
     outline: none;
-    width: 80%;
+    width: 100%;
     font-size: 16px;
 }
 .containerParticipantes {
@@ -130,6 +131,7 @@ input {
     color: #28BB25;
     font-size: 20px;
     font-weight: 700;
+    display: none;
 }
 .visibilidade {
     margin: 20px 0px;
@@ -147,6 +149,14 @@ input {
     background-color: rgba(0, 0, 0, 0.6);
     width: 40%;
 }
+.ligado {
+    display: initial;
+}
 .desligado {
     display: none;
+}
+.lembrete {
+    margin-top: 5px;
+    font-size: 14px;
+    font-weight: 300;
 }

@@ -16,45 +16,33 @@
     <div class="container">
     </div>
     <div class="base">
-        <input type="text" placeholder="Escreva aqui...">
+        <div>
+            <input type="text" placeholder="Escreva aqui...">
+            <div class="lembrete"></div>
+        </div>
         <ion-icon name="paper-plane-outline" onclick="enviarMensagem(this)"></ion-icon>
     </div>
     <div class="containerParticipantes desligado">
-        <div class="fundo"></div>
+        <div class="fundo" onclick="abrirParticipantes()"></div>
         <div class="abaParticipantes">
             <h2>Escolha um contato</h2>
             <h2>para enviar mensagem:</h2>
-            <div class="menuParticipantes">
-                <div>
-                    <div>
-                        <ion-icon class="todos" name="people"></ion-icon>
-                        <span>Todos</span>
-                    </div>
-                    <ion-icon class="check" name="checkmark"></ion-icon>
-                </div>
-                <div>
-                    <div>
-                        <ion-icon class="pessoa" name="person"></ion-icon>
-                        <span>João</span>
-                    </div>
-                    <ion-icon class="check desligado" name="checkmark"></ion-icon>
-                </div>
-            </div>
+            <div class="menuParticipantes"></div>
             <h2>Escolha a visibilidade:</h2>
             <div class="visibilidade">
                 <div>
-                    <div>
+                    <div onclick="selecionarVisibilidade(this)">
                         <ion-icon name="lock-open"></ion-icon>
                         <span>Público</span>
                     </div>
-                    <ion-icon class="check" name="checkmark"></ion-icon>
+                    <ion-icon class="check ligado" name="checkmark"></ion-icon>
                 </div>
                 <div>
-                    <div>
+                    <div onclick="selecionarVisibilidade(this)">
                         <ion-icon name="lock-closed"></ion-icon>
                         <span>Reservadamente</span>
                     </div>
-                    <ion-icon class="check desligado" name="checkmark"></ion-icon>
+                    <ion-icon class="check" name="checkmark"></ion-icon>
                 </div>
             </div>
         </div>
