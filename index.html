@@ -11,7 +11,7 @@
 <body>
     <div class="topo">
         <img src="/imagens/logo 1.png" alt="Logo UOL"/>
-        <ion-icon name="people"></ion-icon>
+        <ion-icon name="people" onclick="abrirParticipantes()"></ion-icon>
     </div>
     <div class="container">
     </div>
@@ -19,27 +19,46 @@
         <input type="text" placeholder="Escreva aqui...">
         <ion-icon name="paper-plane-outline" onclick="enviarMensagem(this)"></ion-icon>
     </div>
-    <!-- <div class="containerParticipantes">
+    <div class="containerParticipantes desligado">
+        <div class="fundo"></div>
         <div class="abaParticipantes">
-            <h2></h2>
+            <h2>Escolha um contato</h2>
+            <h2>para enviar mensagem:</h2>
             <div class="menuParticipantes">
                 <div>
-                    <ion-icon name="people"></ion-icon>
-                    <span>Todos</span>
-                    <ion-icon name="people"></ion-icon>
+                    <div>
+                        <ion-icon class="todos" name="people"></ion-icon>
+                        <span>Todos</span>
+                    </div>
+                    <ion-icon class="check" name="checkmark"></ion-icon>
+                </div>
+                <div>
+                    <div>
+                        <ion-icon class="pessoa" name="person"></ion-icon>
+                        <span>João</span>
+                    </div>
+                    <ion-icon class="check desligado" name="checkmark"></ion-icon>
                 </div>
             </div>
-            <h2></h2>
+            <h2>Escolha a visibilidade:</h2>
             <div class="visibilidade">
                 <div>
-                    <ion-icon name="people"></ion-icon>
-                    <span>Público</span>
-                    <ion-icon name="people"></ion-icon>
+                    <div>
+                        <ion-icon name="lock-open"></ion-icon>
+                        <span>Público</span>
+                    </div>
+                    <ion-icon class="check" name="checkmark"></ion-icon>
+                </div>
+                <div>
+                    <div>
+                        <ion-icon name="lock-closed"></ion-icon>
+                        <span>Reservadamente</span>
+                    </div>
+                    <ion-icon class="check desligado" name="checkmark"></ion-icon>
                 </div>
             </div>
         </div>
-        <div class="fundo"></div>
-    </div> -->
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
     <script src="/java/java.js"></script>

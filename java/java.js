@@ -90,6 +90,9 @@ function atualizar() {
 function erro() {
     window.location.reload()
 }
+function abrirParticipantes() {
+    document.querySelector(".containerParticipantes").classList.remove("desligado")
+}
 
 //Lógica
 definirNickname();
