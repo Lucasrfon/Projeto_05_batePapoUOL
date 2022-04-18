@@ -11,14 +11,13 @@ let para = "Todos";
 
 //Declaração de Funções
 function definirNickname() {
-    usuario.name = prompt("Escolha seu nickname:");
+    usuario.name = document.querySelector(".login").querySelector("input").value;
     requisicaoLogin = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', usuario);
-    requisicaoLogin.then(entrarBatePapo);
+    requisicaoLogin.then(entrando);
     requisicaoLogin.catch(usuarioInvalido);
 }
 function usuarioInvalido() {
     alert("Infelizmente já existe um usuário com esse nickname! Por gentileza, escolha outro.")
-    definirNickname();
 }
 function atualizar() {
     let mensagens = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
@@ -29,6 +28,7 @@ function atualizarParticipantes() {
     lista.then(renderizarParticipantes);
 }
 function entrarBatePapo() {
+    document.querySelector(".login").classList.add("desligado")
     atualizar();
     atualizarParticipantes();
     setInterval(manterConectado, 4000);
@@ -58,7 +58,7 @@ function renderizarMensagens(resposta) {
             case "status":
                 renderizar.innerHTML += 
                 `<div class="entradaSaida">
-                    <span class="hora">${resposta.data[i].time}</span>
+                    <span class="hora">(${resposta.data[i].time})</span>
                     <h1>${resposta.data[i].from}</h1>
                     <span>${resposta.data[i].text}</span>
                 </div>`;
@@ -66,7 +66,7 @@ function renderizarMensagens(resposta) {
             case "message":
                 renderizar.innerHTML +=
                 `<div class="geral">
-                    <span class="hora">${resposta.data[i].time}</span>
+                    <span class="hora">(${resposta.data[i].time})</span>
                     <h1>${resposta.data[i].from}</h1>
                     <span>para</span>
                     <h1>${resposta.data[i].to}:</h1>
@@ -77,7 +77,7 @@ function renderizarMensagens(resposta) {
                 if(resposta.data[i].from === usuario.name || resposta.data[i].to === usuario.name || resposta.data[i].from === "Todos") {
                     renderizar.innerHTML +=
                     `<div class="reservadamente">
-                        <span class="hora">${resposta.data[i].time}</span>
+                        <span class="hora">(${resposta.data[i].time})</span>
                         <h1>${resposta.data[i].from}</h1>
                         <span>reservadamente para</span>
                         <h1>${resposta.data[i].to}:</h1>
@@ -141,5 +141,11 @@ function selecionarVisibilidade(este) {
         document.querySelector(".lembrete").innerHTML = `Enviando para ${para} (reservadamente)`
     }
 }
-
-definirNickname();
+function entrando() {
+    document.querySelector(".login").querySelector("input").remove();
+    document.querySelector("button").remove();
+    document.querySelector(".login").innerHTML +=
+    `<div class="fa fa-spinner fa-spin" style="font-size:80px"></div>
+    <div class="espera">Entrando...</div>`
+    setTimeout(entrarBatePapo, 3000)
+}
