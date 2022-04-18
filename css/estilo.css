@@ -160,3 +160,19 @@ input {
     font-size: 14px;
     font-weight: 300;
 }
+::placeholder {
+    font-style: italic;
+    color: #000000;
+}
+.base ion-icon:hover {
+    cursor: pointer;
+}
+.topo ion-icon:hover {
+    cursor: pointer;
+}
+.menuParticipantes div:hover {
+    cursor: pointer;
+}
+.visibilidade div:hover {
+    cursor: pointer;
+}
